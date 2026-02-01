@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inscription</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; padding-top: 50px; }
+        form { border: 1px solid #ccc; padding: 20px; border-radius: 5px; width: 300px; }
+        button { width: 100%; background: #008CBA; color: white; padding: 10px; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <form method="post">
+        <h2>Créer un compte</h2>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">S'inscrire</button>
+    </form>
+</body>
+</html>

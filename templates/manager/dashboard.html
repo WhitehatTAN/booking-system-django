@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>📊 Tableau de Bord Manager</h2>
+        <span class="badge bg-dark">Admin Zone</span>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Client</th>
+                        <th>Service</th>
+                        <th>Date & Heure</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rdv in appointments %}
+                    <tr>
+                        <td class="fw-bold">{{ rdv.user.username }}</td>
+                        <td>{{ rdv.service.name }}</td>
+                        <td>
+                        {{ rdv.date|date:"d/m/Y" }} <br>
+                         <small class="text-muted">{{ rdv.date|date:"H:i" }}</small>
+                        </td>
+                        <td>
+                            {% if rdv.status == 'CONFIRMED' %}
+                                <span class="badge bg-primary">Confirmé</span>
+                            {% elif rdv.status == 'DONE' %}
+                                <span class="badge bg-success">Terminé</span>
+                            {% elif rdv.status == 'CANCELLED' %}
+                                <span class="badge bg-secondary">Annulé</span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark">En attente</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if rdv.status == 'CONFIRMED' or rdv.status == 'PENDING' %}
+                                <a href="{% url 'change_status' rdv.id 'DONE' %}" class="btn btn-sm btn-outline-success" title="Marquer comme terminé">
+                                    <i class="fas fa-check"></i>
+                                </a>
+                                <a href="{% url 'change_status' rdv.id 'CANCELLED' %}" class="btn btn-sm btn-outline-danger" title="Annuler le RDV">
+                                    <i class="fas fa-times"></i>
+                                </a>
+                            {% else %}
+                                <span class="text-muted small">-</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-4">Aucun rendez-vous trouvé.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

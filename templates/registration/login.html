@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load socialaccount %} {% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <div class="card shadow">
+            <div class="card-body p-4 text-center">
+                <h3 class="mb-4">Connexion</h3>
+
+                <a href="{% provider_login_url 'google' %}" class="btn btn-danger w-100 mb-3" style="background-color: #db4437; color: white;">
+                    <i class="fab fa-google me-2"></i> Continuer avec Google
+                </a>
+
+                <div class="d-flex align-items-center my-3">
+                    <hr class="flex-grow-1">
+                    <span class="mx-2 text-muted">OU</span>
+                    <hr class="flex-grow-1">
+                </div>
+
+                <form method="post" action="{% url 'account_login' %}">
+                    {% csrf_token %}
+                    <div class="mb-3 text-start">
+                        <label>E-mail ou Pseudo</label>
+                        <input type="text" name="login" class="form-control" required placeholder="Entrez votre email">
+                    </div>
+                    <div class="mb-3 text-start">
+                        <label>Mot de passe</label>
+                        <input type="password" name="password" class="form-control" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+                </form>
+                
+                <div class="mt-3">
+                    <a href="{% url 'account_signup' %}">Créer un compte par email</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

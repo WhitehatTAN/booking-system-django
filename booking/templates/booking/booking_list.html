@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card text-center mb-4">
+            <div class="card-header bg-white">
+                <h4 class="mb-0">Réserver : {{ service.name }}</h4>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">Durée : {{ service.duration }} • Prix : {{ service.price }}€</p>
+                
+                <form method="GET" class="d-flex justify-content-center align-items-center gap-2 mb-4">
+                    <label class="fw-bold">Date :</label>
+                    <input type="date" name="date" value="{{ search_date|date:'Y-m-d' }}" class="form-control w-auto">
+                    <button type="submit" class="btn btn-primary">Voir</button>
+                </form>
+
+                <hr>
+
+                <h5 class="mb-3">Disponibilités pour le {{ search_date|date:"l d F Y" }}</h5>
+
+                <div class="d-flex flex-wrap gap-2 justify-content-center">
+                    {% for slot in slots %}
+                        <a href="{% url 'confirm_booking' service.id search_date|date:'Y-m-d' slot|date:'H:i' %}" 
+                           class="btn btn-outline-success btn-lg px-4"
+                           onclick="return confirm('Confirmer le RDV de {{ slot|date:'H:i' }} ?')">
+                           {{ slot|date:"H:i" }}
+                        </a>
+                    {% empty %}
+                        <div class="alert alert-warning w-100">
+                            😔 Aucun créneau disponible pour cette date. Essayez un autre jour !
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+# Ignorer le dossier de l'environnement virtuel (ton dossier 'system' ou 'venv')
+system/
+venv/
+env/
+
+# Ignorer les fichiers temporaires Python
+__pycache__/
+*.pyc
+
+# Ignorer la base de données locale (on en aura une nouvelle propre sur le serveur)
+db.sqlite3
+
+# Ignorer les dossiers de médias locaux (les images de test)
+media/
